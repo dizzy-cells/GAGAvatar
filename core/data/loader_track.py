@@ -74,8 +74,9 @@ class TrackedData(torch.utils.data.Dataset):
         # driven image
         t_record = {}
         t_image = self._lmdb_engine[frame_key].float() / 255.0
-        for key in ['bbox', 'posecode', 'shapecode', 'expcode', 'eyecode', 'transform_matrix']:
+        for key in ['bbox', 'posecode', 'shapecode', 'expcode', 'eyecode', 'transform_matrix', ]:
             t_record[key] = torch.tensor(self._data[frame_key][key]).float()
+            
         t_points = self.flame_model(
             shape_params=t_record['shapecode'][None], pose_params=t_record['posecode'][None],
             expression_params=t_record['expcode'][None], eye_pose_params=t_record['eyecode'][None],
